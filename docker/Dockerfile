@@ -30,16 +30,8 @@ RUN mkdir -p /usr/local/include/plf && \
 # Set the working directory
 WORKDIR /iqtree2
 
-# Copy the current directory contents into the container
-COPY . /iqtree2
-
-# Clone LSD2 into the expected subdirectory
+# Clone LSD2 into the expected subdirectory after copying the contents
 RUN git clone https://github.com/tothuhien/lsd2.git lsd2
-
-# Build IQ-TREE 2
-RUN rm -rf build && mkdir -p build && cd build && \
-    cmake .. && \
-    make VERBOSE=1
 
 # Copy entrypoint script to pass keys from the host (specified in SSH_KEYS_SOURCE_DIR) to the container
 COPY docker/entrypoint.sh /entrypoint.sh

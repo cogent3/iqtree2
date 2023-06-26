@@ -82,19 +82,32 @@ To run the container in terminal mode, add the following argument to the `docker
 
 ## How to configure your SSH keys into the Docker container
 
-If you intend to contribute to a private fork of the iqtree2 repository, and you have an SSH private key set up on your host machine, and you have added your public SSH key to your GitHub account (https://github.com/settings/keys), then you can copy your SSH private key into the Docker container so that you can push and pull from your fork from inside the container. To do this, add the following argument to the `docker run` command:
+If you intend to contribute to a private fork of the iqtree2 repository, and you have an SSH private key set up on your host machine, and you have added your public SSH key to your GitHub account (https://github.com/settings/keys), then you can mount your SSH private key into the Docker container so that you can push and pull from your fork from inside the container. To do this, add the following argument to the `docker run` command:
 
 ### for macOS/Linux
-`-e SSH_PRIVATE_KEY_FILE_NAME=~/.ssh/id_rsa`
 
-You can change the path to your private key file if you are using a different path.  For example, if your private key is located at ~/.ssh/my_private_key, you can add the following argument to the `docker run` command:
+`-v ~/.ssh/PRIVATE_KEY:/root/.ssh/id_rsa`
 
-`-e SSH_PRIVATE_KEY_FILE_NAME=~/.ssh/my_private_key`
+replace `PRIVATE_KEY` with the name of your private key file.
+
 ### for Windows (powershell)
 
-`-e SSH_PRIVATE_KEY_FILE_NAME=$env:USERPROFILE/.ssh/id_rsa`
+`-v $env:USERPROFILE/.ssh/PRIVATE_KEY:/root/.ssh/id_rsa`
 
-The file id_rsa will be copied from the path specified by the SSH_PRIVATE_KEY_FILE_NAME environment variable into the Docker container at the path /root/.ssh/id_rsa.  
+replace `PRIVATE_KEY` with the name of your private key file.
+
+### Checking that you can authenticate with Github.com from inside the container
+
+Run the following command from an interactive terminal session inside the container:
+
+```sh
+ssh -T git@github.com
+```
+
+This will prompt you to add github.com to your list of known hosts.  Type `yes` to add github.com to your list of known hosts.  You should see the following message:
+
+`Hi USER_NAME! You've successfully authenticated, but GitHub does not provide shell access.` 
+
 
 ## Configuring the container for debugging using Xcode
 
@@ -102,7 +115,6 @@ To configure the container for debugging using Xcode, add the following argument
 
 `-p 1234:1234 -e DISPLAY=host.docker.internal:0`
 
-...
 - `-p 1234:1234`: Maps port 1234 on the host to port 1234 in the container to allow Xcode debuugging.
 - `-e DISPLAY=host.docker.internal:0`: Specifies the X11 display to use will be on the host machine.
 
@@ -112,17 +124,19 @@ To configure the container for debugging using VScode, add the following argumen
 
 `-p 3000:3000`
 
-...
 - `-p 3000:3000`: Maps port 3000 on the host to port 3000 in the container to allow VS Code debugging.
 
 ## Inside the Docker Container
 
 Once inside the Docker container, you will be in the `/iqtree2` directory where you can find the IQ-TREE 2 project files. You can perform git operations, build the project, and run tests as you would in a regular development environment.
 
-The executable built during the construction of the image will be in the /iqtree2/build directory.  Rebuilding that executable can be done by running the following commands:
+To build the project 
 
 ```sh
-cd /iqtree2/build
+cd /iqtree2
+rm -rf build
+mkdir -p build
+cd build
 cmake ..
 make
 ```

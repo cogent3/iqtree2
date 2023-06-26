@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Check if the SSH_PRIVATE_KEY_FILE_NAME environment variable is set
-if [ -n "$SSH_PRIVATE_KEY_FILE_NAME" ]; then
-    # Copy the SSH private key file specified in the environment variable
-    cp "${SSH_PRIVATE_KEY_FILE_NAME}" /root/.ssh/id_rsa
-    
+# Set the path to the SSH private key
+SSH_PRIVATE_KEY=/root/.ssh/id_rsa
+
+# Check if the SSH private key file exists
+if [ -f "${SSH_PRIVATE_KEY}" ]; then
     # Set permissions
-    chmod 600 /root/.ssh/id_rsa
+    chmod 600 "${SSH_PRIVATE_KEY}"
 else
-    echo "SSH_PRIVATE_KEY_FILE_NAME environment variable is not set."
+    echo "No SSH private key found at: ${SSH_PRIVATE_KEY}"
 fi
 
 # Execute the main process
