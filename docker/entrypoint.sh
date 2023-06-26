@@ -9,6 +9,7 @@ if [ -f "${SSH_PRIVATE_KEY}" ]; then
     chmod 600 "${SSH_PRIVATE_KEY}"
 else
     echo "No SSH private key found at: ${SSH_PRIVATE_KEY}"
+    echo "If you don't mount your SSH private key when you run the container, you won't be able to access private repositories on github."
 fi
 
 # Execute the main process
