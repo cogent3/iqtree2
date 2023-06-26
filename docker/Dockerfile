@@ -41,5 +41,14 @@ RUN rm -rf build && mkdir -p build && cd build && \
     cmake .. && \
     make VERBOSE=1
 
+# Copy entrypoint script to pass keys from the host (specified in SSH_KEYS_SOURCE_DIR) to the container
+COPY docker/entrypoint.sh /entrypoint.sh
+
+# Set permissions for the entrypoint script
+RUN chmod +x /entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
 # Run an interactive shell when the container launches
 CMD ["/bin/bash"]
