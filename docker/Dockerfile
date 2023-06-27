@@ -20,7 +20,9 @@ RUN apt-get update && apt-get install -y \
     libopenmpi-dev \
     openmpi-bin \
     libpll-dev \
-    wget
+    wget \
+    python3 \
+    python3-pip
 
 # Download header files for plf_nanotimer and plf_colony
 RUN mkdir -p /usr/local/include/plf && \
