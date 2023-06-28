@@ -164,6 +164,26 @@ To configure the container for debugging using VScode, add the following argumen
 
 - `-p 3000:3000`: Maps port 3000 on the host to port 3000 in the container to allow VS Code debugging.
 
+## Running a file in the container
+
+To run a file in the container, add the command and it's arguments to the end of the `docker run` command:
+
+`docker run iqtree2-dev <command> <arguments>`
+
+eg: To run the iqtree executable in the container:
+
+`docker run iqtree2-dev iqtree -s example.phy`
+
+or to run pytest in the \iqtest2\test directory:
+
+`docker run iqtree2-dev cd \iqtree2\test && pytest`
+
+## Sample docker run command
+
+A docker run command for developing in detached mode from VS Code with the ability to check in code to a private fork of the iqtree2 repository on GitHub would look like this:
+
+`docker run -it -d -v ${PWD}:/iqtree2 -v $env:USERPROFILE/.ssh/github:/root/.ssh/id_rsa -p 3000:3000 --name iqtree2-dev iqtree2-dev /bin/bash`
+
 ## Inside the Docker Container
 
 Once inside the Docker container, you will be in the `/iqtree2` directory where you can find the IQ-TREE 2 project files. You can perform git operations, build the project, and run tests as you would in a regular development environment.
