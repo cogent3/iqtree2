@@ -86,13 +86,19 @@ Most developers will likely run a container persistently (in detached mode) acro
 
 `-d`
 
-NB: If you have the flag -rm in your docker run command, the container will be removed when it exits.  This is not what you want if you are running the container in detached mode.  So, if you are running the container in detached mode, you should remove the -rm flag from the docker run command.
+NB: If you have the flag -rm in your docker run command, the container will be removed when it exits.  This is not what you want if you want the container to persist.  So, if you are running the container in detached mode, you should remove the -rm flag from the docker run command.
 
 You will need to find the container ID to subsequently attach to the container. To do this, run the following command:
 
-`docker ps`
+`docker ps -all`
 
-This will list all running containers.  Find the container ID for the container you want to attach to.  Then, run the following command to attach to the container:
+This will list all running/stopped containers.  Find the container ID for the container you want to attach to.  
+
+If it is stopped, you will need to start it using the following command:
+
+`docker start <container_id>`
+
+Then, run the following command to attach to the container:
 
 `docker attach <container_id>`
 
