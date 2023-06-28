@@ -57,7 +57,7 @@ This container downloads and installs the following dependencies:
 
 To build the Docker image, navigate to the root of the repository and run the following command to build a docker image named `iqtree-dev` using the Dockerfile in the `docker` directory:
 
-`docker build -t iqtree2-dev -f docker/Dockerfile .`
+`docker build --tag iqtree2-dev -f docker/Dockerfile .`
 
 ## Running the Docker Container
 
@@ -80,6 +80,21 @@ To run the container in terminal mode, add the following argument to the `docker
 - `-it`: Allocates a pseudo-TTY connected to the container’s stdin and stdout.
 - `--rm`: Automatically removes the container when it exits.
 
+## Running the container in detached mode
+
+Most developers will likely run a container persistently (in detached mode) across multiple terminal sessions. To run the container in detached mode, add the following argument to the `docker run` command:
+
+`-d`
+
+NB: If you have the flag -rm in your docker run command, the container will be removed when it exits.  This is not what you want if you are running the container in detached mode.  So, if you are running the container in detached mode, you should remove the -rm flag from the docker run command.
+
+You will need to find the container ID to subsequently attach to the container. To do this, run the following command:
+
+`docker ps`
+
+This will list all running containers.  Find the container ID for the container you want to attach to.  Then, run the following command to attach to the container:
+
+`docker attach <container_id>`
 ## How to configure your SSH keys into the Docker container
 
 If you intend to contribute to a private fork of the iqtree2 repository, and you have an SSH private key set up on your host machine, and you have added your public SSH key to your GitHub account (https://github.com/settings/keys), then you can mount your SSH private key into the Docker container so that you can push and pull from your fork from inside the container. To do this, add the following argument to the `docker run` command:
