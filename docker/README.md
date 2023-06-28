@@ -109,6 +109,15 @@ In interactive mode simply enter `exit`.
 In detached mode use the following command:
 
 `docker stop <container_id>`
+
+## Naming continers
+
+By default containers are given random names, like `flamboyant_badger`.  To explicitly name a container, add the following argument to the `docker run` command:
+
+`--name <container_name>`
+
+when referring to a container using docker command, you can use either the container ID or the container name.
+
 ## How to configure your SSH keys into the Docker container
 
 If you intend to contribute to a private fork of the iqtree2 repository, and you have an SSH private key set up on your host machine, and you have added your public SSH key to your GitHub account (https://github.com/settings/keys), then you can mount your SSH private key into the Docker container so that you can push and pull from your fork from inside the container. To do this, add the following argument to the `docker run` command:
