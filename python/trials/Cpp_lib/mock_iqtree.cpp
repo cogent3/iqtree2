@@ -1,10 +1,6 @@
 
 #include "mock_iqtree.h"
 
-int character_count(const std::string& input) {
-    return input.size();
-}
-
 std::string phylogenetic_analysis(
     const std::string& alignment_file, 
     const std::string& partition_file, 

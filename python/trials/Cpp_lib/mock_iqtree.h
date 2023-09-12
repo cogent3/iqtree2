@@ -7,8 +7,6 @@
     #define EXPORT
 #endif
 
-EXPORT int character_count(const std::string& input);
-
 EXPORT std::string phylogenetic_analysis(
     const std::string& aln_file, 
     const std::string& partition_file, 
